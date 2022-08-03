@@ -35,6 +35,7 @@ public class CategoryDAO extends ConnectionDB{
 		}
 		return list;
 	}
+	
 	public static ArrayList<Product> getAllProductById(int id) throws NumberFormatException, ParseException {
 		ArrayList<Product> list = new ArrayList<>();
 		String sql = "SELECT * FROM `product` WHERE 1=1";

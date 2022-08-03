@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.servlet.dao.CategoryDAO;
 import com.servlet.model.Category;
+import com.servlet.model.Product;
 
 /**
  * Servlet implementation class List
@@ -36,7 +37,19 @@ public class ListCategory extends HttpServlet {
 		CategoryDAO cd = new CategoryDAO();
 		ArrayList<Category> list = cd.getAll();
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("listCategory.jsp").forward(request, response);
+		
+		String id_raw = request.getParameter("key");
+		try {
+			int cid = (id_raw==null)? 0: Integer.parseInt(id_raw);
+			ArrayList<Product> ds = cd.getAllProductById(cid);
+			request.setAttribute("listProducts", ds);
+			request.setAttribute("cid", cid);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println(e);
+		}
+		request.getRequestDispatcher("home.jsp").forward(request, response);
 	}
 
 	/**
@@ -44,7 +57,9 @@ public class ListCategory extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+//		doGet(request, response);
+		
+		
 	}
 
 }
